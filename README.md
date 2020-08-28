@@ -1,2 +1,3 @@
 # stretch-and-fold
-Sourdough bread recipes and calculator using baker's percentages.
+
+Simple desktop app contaning sourdough bread recipes and a calculator for converting baker's percentages to weights.

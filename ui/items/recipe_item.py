@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 
-from ui.fragments.ingredient_item import IngredientItem
+from ui.items.ingredient_item import IngredientItem
 
 class RecipeItem(ttk.Frame):
     def __init__(self, parent, recipe):

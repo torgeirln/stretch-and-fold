@@ -1,16 +1,17 @@
 import tkinter as tk
 from tkinter import ttk
 
-from ui.fragments.recipe_item import RecipeItem
+from ui.items.recipe_item import RecipeItem
+from ui.base.scrollable_frame import ScrollableFrame
 
-class RecipesFragment(ttk.Frame):
+
+class SummaryFragment(ScrollableFrame):
     def __init__(self, parent, view_model):
-        super().__init__(parent, relief='raised')
+        super().__init__(parent)
         self.view_model = view_model
         self.init_constants()
         self.init_styles()
         self.create_content()
-        # self.pack(side=tk.LEFT, fill=tk.BOTH, anchor=tk.W, expand=True, pady=self.pady, padx=self.padx)
 
     def init_constants(self):
         # Paddings
@@ -28,7 +29,6 @@ class RecipesFragment(ttk.Frame):
         self.recipes = recipes
         self.recipe_items = []
         for i, recipe in enumerate(self.recipes):
-            recipe_item = RecipeItem(self, recipe)
-            # recipe_item.grid(row=i, pady=self.pady, sticky=tk.W+tk.E)
-            recipe_item.pack(anchor=tk.W, fill=tk.Y, ipady=self.pady)
+            recipe_item = RecipeItem(self.scrollable_frame, recipe)
+            recipe_item.pack(ipady=self.pady, anchor="w")
             self.recipe_items.append(recipe_item)

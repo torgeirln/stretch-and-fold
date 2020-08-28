@@ -1,24 +1,27 @@
 import tkinter as tk 
 from tkinter import ttk
 
-from ui.activities.main_activity import MainActivity
+from ui.fragments.side_panel_fragment import SidePanelFragment
+from ui.fragments.main_fragment import MainFragment
 from ui.view_model import ViewModel
 
 
-class Application(ttk.Frame):
-	def __init__(self, root):
-		super().__init__(root, padding="12 12 12 12")
-		self.pack(expand=True, fill=tk.BOTH)
-		self.root = root
-		self.root.title('Bread app')
-		self.root.geometry("+400+100")
-		self.create_content()
-		# self.bind('<Configure>', self.on_configured)
-		
-	def create_content(self):
-		view_model = ViewModel()
-		self.activity = MainActivity(self, view_model)
+class Application():
+    def __init__(self, root):
+        self.root = root
+        self.root.rowconfigure(0, minsize=800, weight=1)
+        self.root.columnconfigure(1, minsize=800, weight=1)
+        self.root.title('Bread app')
+        self.root.geometry("+400+100")
+        self.create_content()
 
-	def on_configured(self, event=None):
-		print(f'Configured application {event}')
-	
+    def mainloop(self):
+        self.root.mainloop()
+        
+    def create_content(self):
+        view_model = ViewModel()
+        self.side_panel = SidePanelFragment(self.root)
+        self.side_panel.grid(row=0, column=0, sticky="ns")
+
+        self.main_fragment = MainFragment(self.root, view_model)
+        self.main_fragment.grid(row=0, column=1, sticky="nsew")
