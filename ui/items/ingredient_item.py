@@ -15,9 +15,9 @@ class IngredientItem(ttk.Frame):
 
     def init_styles(self):
         # Ingredient name
-        ttk.Style().configure('IngredientItem_Name.TLabel', foreground='green', font="Helvetica 10")
+        ttk.Style().configure('IngredientItem_Name.TLabel', font="Helvetica 12")
         # Ingredient type
-        ttk.Style().configure('IngredientItem_Type.TLabel', foreground='red')
+        ttk.Style().configure('IngredientItem_Type.TLabel')
 
     def create_content(self):
         self.name_label = ttk.Label(self, text=f'{self.ingredient.name}', style='IngredientItem_Name.TLabel')
