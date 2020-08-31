@@ -16,12 +16,10 @@ class RecipeFragment(ScrollableFrame):
     
     def init_constants(self):
         # Paddings
-        self.main_padx = 50
+        self.main_padx = 20
 
     def init_styles(self):
         # Description
-        self.title_style = 'Recipe_Title.TLabel'
-        ttk.Style().configure(self.title_style, font="Helvetica 32 bold")
         self.description_style = 'Recipe_Description.TLabel'
         ttk.Style().configure(self.description_style, font="Helvetica 12 italic")
         self.header_style = 'Recipe_Ingredients_Header.TLabel'
@@ -31,13 +29,6 @@ class RecipeFragment(ScrollableFrame):
         
 
     def create_content(self):
-        self.title_label = ttk.Label(
-            self.scrollable_frame, 
-            text=self.recipe.title, 
-            style=self.title_style
-        )
-        self.title_label.grid(row=0, column=0, sticky="new", pady=20, padx=20)
-
         self.description_label = ttk.Label(
             self.scrollable_frame, 
             text=self.recipe.description, 
