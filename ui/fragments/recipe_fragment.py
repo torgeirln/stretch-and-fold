@@ -27,7 +27,6 @@ class RecipeFragment(ScrollableFrame):
         self.ingredient_style = 'Recipe_Ingredient.TLabel'
         ttk.Style().configure(self.ingredient_style, font="Helvetica 12")
         
-
     def create_content(self):
         self.description_label = ttk.Label(
             self.scrollable_frame, 
@@ -95,7 +94,6 @@ class RecipeFragment(ScrollableFrame):
             )
 
         self.levain_frame.grid(row=4, column=0, sticky='new', padx=self.main_padx, pady=10)
-
 
         self.bakers_per_header_label = ttk.Label(
             self.scrollable_frame,

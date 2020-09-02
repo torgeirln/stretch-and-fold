@@ -1,6 +1,7 @@
 import tkinter as tk 
 from tkinter import ttk
 
+from ui.fragments.create_bakers_pct_recipe_fragment import CreateBakersPctRecipeFragment
 from ui.fragments.recipe_fragment import RecipeFragment
 from ui.fragments.side_panel_fragment import SidePanelFragment
 from ui.fragments.summary_fragment import SummaryFragment
@@ -13,7 +14,7 @@ class Application(ttk.Frame):
         self.pack(fill='both', expand=True)
         self.root = root
         self.rowconfigure(1, minsize=1000, weight=1)
-        self.columnconfigure(1, minsize=800, weight=1)
+        self.columnconfigure(1, minsize=900, weight=1)
         self.root.title('Stretch and fold')
         self.root.geometry("+400+5")
         self.init_styles()
@@ -43,6 +44,11 @@ class Application(ttk.Frame):
         print('- show_recipes_overview')
         self.title_bar.configure(text='All recipes')
         self.replace_currernt_fragment(self.summary_fragment)
+
+    def show_create_new_recipe(self):
+        print('- show_create_new_recipe')
+        self.title_bar.configure(text='Create new recipe')
+        self.replace_currernt_fragment(CreateBakersPctRecipeFragment(self))
 
     def set_currernt_fragment(self, fragment):
         self.current_fragment = fragment
