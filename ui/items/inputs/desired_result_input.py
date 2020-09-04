@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 
+from domain.models.ingredient_models import DesiredResultModel
 from ui.styles.recipe_styles import header_style, ingredient_style
 
 
@@ -57,3 +58,14 @@ class DesiredResultInputItem(ttk.Frame):
 
     def on_levain_entry_changed(self, *args):
         self.levain_entry_callback(self.levain_entry_var.get())
+
+    def get_dough_weight(self):
+        return self.item_weight_entry.get()
+    
+    def get_desired_result(self):
+        return DesiredResultModel(
+            float(self.item_weight_entry.get()),
+            float(self.item_hydartion_entry.get()),
+            float(self.item_salt_entry.get()),
+            float(self.item_levain_entry.get())
+        )

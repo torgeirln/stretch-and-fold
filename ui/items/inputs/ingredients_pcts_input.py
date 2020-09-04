@@ -2,7 +2,8 @@ import tkinter as tk
 from tkinter import ttk
 
 from domain.types.ingredient_types import IngredientTypes
-from domain.models.ingredient_models import IngredientPctModel, SimpleIngredient
+# from domain.models.ingredient_models import IngredientPctModel, SimpleIngredient
+from domain.models.ingredient_models import IngredientModel
 from ui.styles.recipe_styles import header_style, column_title_style
 
 
@@ -39,9 +40,11 @@ class IngredientsPctsInputItem(ttk.Frame):
         self.add_ingredient('Grahamsmjöl', IngredientTypes.flour, pct=20)
         self.add_ingredient('Vatten', IngredientTypes.liquid, pct=100)
         self.add_ingredient('Finkornigt salt', IngredientTypes.salt, pct=100)
+        # self.add_ingredient('Ost', IngredientTypes.other, pct=10)
+        # self.add_ingredient('Jaller', IngredientTypes.other, pct=10)
         # Button
         self.add_ingredient_button = ttk.Button(self, text='Add ingredient', command=self.on_add_ingredient_clicked)
-        self.add_ingredient_button.grid(row=self.n_max_ingredients, column=0, sticky='w', pady=5)
+        self.add_ingredient_button.grid(row=self.n_max_ingredients, column=0, sticky='w', padx=10, pady=5)
 
     def add_ingredient(self, name=None, type_=None, pct=None):
         current_row = len(self.ingredients_entires) + self.n_init_rows
@@ -81,8 +84,10 @@ class IngredientsPctsInputItem(ttk.Frame):
             else:
                 type_ = entries[1].get()
                 pct = entries[2].get()
-            # ingredients.append(SimpleIngredient(name, type_, pct))
-            ingredients.append(IngredientPctModel(name, type_, pct))
+            try:
+                ingredients.append(IngredientModel(name, type_, float(pct)))
+            except:
+                pass
         if not self.include_levain:
             ingredients.remove(ingredients[0])
         return ingredients

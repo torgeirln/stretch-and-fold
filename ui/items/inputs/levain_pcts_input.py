@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
 
+from domain.types.ingredient_types import LevainTypes
+from domain.models.ingredient_models import LevainPctModel
 from ui.styles.recipe_styles import header_style, ingredient_style
 
 
@@ -24,14 +26,21 @@ class LevainPctsInputItem(ttk.Frame):
         self.hydration_entry.insert(0, 175)
         self.hydration_entry.grid(row=1, column=1, sticky='ew', pady=2)
 
-        self.starter_pct_label = ttk.Label(self, text='Ratio of starter:', style=ingredient_style())
-        self.starter_pct_label.grid(row=2, column=0, sticky='ew', padx=self.main_padx, pady=self.row_spacing)
-        self.starter_pct_enty = ttk.Entry(self)
-        self.starter_pct_enty.insert(0, 25)
-        self.starter_pct_enty.grid(row=2, column=1, sticky='ew', pady=2)
+        self.starter_ratio_label = ttk.Label(self, text='Ratio of starter:', style=ingredient_style())
+        self.starter_ratio_label.grid(row=2, column=0, sticky='ew', padx=self.main_padx, pady=self.row_spacing)
+        self.starter_ratio_enty = ttk.Entry(self)
+        self.starter_ratio_enty.insert(0, 25)
+        self.starter_ratio_enty.grid(row=2, column=1, sticky='ew', pady=2)
 
         self.starter_hydration_label = ttk.Label(self, text='Hydration of starter:', style=ingredient_style())
         self.starter_hydration_label.grid(row=3, column=0, sticky='ew', padx=self.main_padx, pady=self.row_spacing)
         self.starter_hydration_entry = ttk.Entry(self)
         self.starter_hydration_entry.insert(0, 175)
         self.starter_hydration_entry.grid(row=3, column=1, sticky='ew', pady=2)
+
+    def get_pcts(self):
+        return LevainPctModel(
+            float(self.hydration_entry.get()),
+            float(self.starter_ratio_enty.get()),
+            float(self.starter_hydration_entry.get())
+        )

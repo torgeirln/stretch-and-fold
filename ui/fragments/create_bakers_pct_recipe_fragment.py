@@ -13,8 +13,9 @@ from ui.styles.recipe_styles import header_style, ingredient_style
 
 
 class CreateBakersPctRecipeFragment(ScrollableFrame):
-    def __init__(self, parent, *args, **kwargs):
+    def __init__(self, parent, view_model, *args, **kwargs):
         super().__init__(parent, *args, padding="20 20 20 20", **kwargs)
+        self.view_model = view_model
         self.rowconfigure(0, minsize=20)
         self.columnconfigure(1, weight=1)
         self.n_ingredients = 0
@@ -84,6 +85,22 @@ class CreateBakersPctRecipeFragment(ScrollableFrame):
         self.save_button.grid(row=0, column=1, sticky='e', padx=5)
         self.button_frame.grid(row=12, column=0, sticky='new', pady=10)
 
+        self.on_show_weights_clicked()
+
+    def show_weights(self, ingreidents_weights, levain):
+        total_dough_weight = 0
+        for ingredient in ingreidents_weights:
+            total_dough_weight += ingredient.amount
+            print(f'{ingredient.name} {ingredient.type} {ingredient.amount}')
+        print(f'total_dough_weight = {total_dough_weight}')
+        self.levain_weights_frame = LevainWeightsPresenterItem(self.scrollable_frame, levain)
+        self.levain_weights_frame.grid(row=15, column=0, columnspan=2, sticky='nsew', pady=10)
+        self.ingredients_weights_frame = IngredientsWeightsPresenterItem(
+            self.scrollable_frame,
+            ingreidents_weights
+        )
+        self.ingredients_weights_frame.grid(row=16, column=0, columnspan=2, sticky='nsew', pady=10)
+
     def on_sourdough_recipe_clicked(self, *args):
         print('Sourdough recipe checkbox clicked!')
         if self.sourdough_recipe_checkbox_var.get() == 0:
@@ -99,15 +116,19 @@ class CreateBakersPctRecipeFragment(ScrollableFrame):
         
     def on_show_weights_clicked(self, *args):
         print('Show weights button clicked!')
-        ingredients = self.ingredients_frame.get_ingredients()
-        print(ingredients[0].name)
-        print(ingredients[0].type)
-        print(ingredients[0].pct)
-        self.ingredients_weights_frame = IngredientsWeightsPresenterItem(
-            self.scrollable_frame,
-            ingredients
+        ingredients_pct = self.ingredients_frame.get_ingredients()
+        # print(ingredients_pct[0].name)
+        # print(ingredients_pct[0].type)
+        # print(ingredients_pct[0].amount)
+        levain = self.levain_frame.get_pcts()
+        total_dough_weight = float(self.desired_result_frame.get_dough_weight())
+        self.view_model.compute_recipe_weights(
+            self.show_weights,
+            total_dough_weight,
+            self.desired_result_frame.get_desired_result(),
+            ingredients_pct, 
+            levain
         )
-        self.ingredients_weights_frame.grid(row=15, column=0, columnspan=2, sticky='nsew', pady=10)
 
     def on_save_recipe_clicked(self, *args):
         print('Save recipe button clicked!')
@@ -118,7 +139,10 @@ class CreateBakersPctRecipeFragment(ScrollableFrame):
         # self.add_image_label.configure(text=path_to_image)
 
     def on_levain_entry_changed(self, new_value):
-        self.ingredients_frame.update_levain_pct(new_value)
+        try:
+            self.ingredients_frame.update_levain_pct(new_value)
+        except:
+            pass
 
     def _show_levain_frame(self):
         self.levain_frame.grid(row=10, column=0, columnspan=2, sticky='nsew', pady=10)

@@ -23,4 +23,10 @@ class IngredientTypes():
         salt,
         other
     ]
+
+    
+class LevainTypes():
+    hyration = 'Hydration'
+    ratio = 'Ratio'
+    starter_hydration = 'Starter hydration'
     

@@ -1,4 +1,4 @@
-from domain.models.ingredient_models import SimpleIngredient
+from domain.models.ingredient_models import IngredientModel, LevainWeightModel
 from domain.types.ingredient_types import IngredientTypes
 
 
@@ -7,35 +7,35 @@ class Recipe3():
     description = 'This is another basic sourdough recipe!'
     rel_image_path = 'data/local/included/images/sourdough_bread.jpg'
     ingredients = [
-        SimpleIngredient(
+        IngredientModel(
             name='Vetemjöl special med fullkorn',
-            type_of_ingredient=IngredientTypes.flour,
+            type_=IngredientTypes.flour,
             amount=90
         ),
-        SimpleIngredient(
+        IngredientModel(
             name='Grahamsmjöl',
-            type_of_ingredient=IngredientTypes.flour,
+            type_=IngredientTypes.flour,
             amount=20
         ),
-        SimpleIngredient(
+        IngredientModel(
             name='Vatten',
-            type_of_ingredient=IngredientTypes.liquid,
+            type_=IngredientTypes.liquid,
             amount=80
         ),
-        SimpleIngredient(
+        IngredientModel(
             name='Levain',
-            type_of_ingredient=IngredientTypes.levain,
+            type_=IngredientTypes.levain,
             amount=20
         ),
-        SimpleIngredient(
+        IngredientModel(
             name='Salt',
-            type_of_ingredient=IngredientTypes.salt,
+            type_=IngredientTypes.salt,
             amount=2
         )
     ]
-    levain = {
-        'Starter': 50,
-        'Finmalt rågmjöl': 54,
-        'Vatten': 94
-    }
-    
+    levain = LevainWeightModel(
+        total=97,
+        flour=26,
+        liquid=46,
+        starter=24
+    )

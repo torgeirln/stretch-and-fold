@@ -17,6 +17,7 @@ class Application(ttk.Frame):
         self.columnconfigure(1, minsize=900, weight=1)
         self.root.title('Stretch and fold')
         self.root.geometry("+400+5")
+        self.view_model = ViewModel()
         self.init_styles()
         self.create_content()
 
@@ -31,9 +32,9 @@ class Application(ttk.Frame):
         self.side_panel = SidePanelFragment(self)
         self.side_panel.grid(row=0, rowspan=2, column=0, sticky="ns")
 
-        view_model = ViewModel()
-        self.summary_fragment = SummaryFragment(self, view_model)
+        self.summary_fragment = SummaryFragment(self, self.view_model)
         self.set_currernt_fragment(self.summary_fragment)
+        # self.set_currernt_fragment(CreateBakersPctRecipeFragment(self, self.view_model))
 
     def show_recipe(self, recipe):
         recipe_fragment = RecipeFragment(self, recipe)
@@ -48,7 +49,7 @@ class Application(ttk.Frame):
     def show_create_new_recipe(self):
         print('- show_create_new_recipe')
         self.title_bar.configure(text='Create new recipe')
-        self.replace_currernt_fragment(CreateBakersPctRecipeFragment(self))
+        self.replace_currernt_fragment(CreateBakersPctRecipeFragment(self, self.view_model))
 
     def set_currernt_fragment(self, fragment):
         self.current_fragment = fragment
