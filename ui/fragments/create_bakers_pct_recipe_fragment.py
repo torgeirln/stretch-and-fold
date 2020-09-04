@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from tkinter.scrolledtext import ScrolledText
 
 from domain.types.ingredient_types import IngredientTypes
 from ui.items.ingredients_pct_item import IngredientsPctItem
@@ -43,8 +44,13 @@ class CreateBakersPctRecipeFragment(ScrollableFrame):
         self.dough_ball_weight_entry = ttk.Entry(self.scrollable_frame)
         self.dough_ball_weight_entry.grid(row=2, column=1, sticky="nsew", pady=self.row_spacing)
 
+        self.description_label = ttk.Label(self.scrollable_frame, text='Description: ', style=self.basic_label_style)
+        self.description_label.grid(row=3, column=0, sticky='new')
+        self.description_entry = ScrolledText(self.scrollable_frame, width=70, height=7)
+        self.description_entry.grid(row=3, column=1, sticky='nsew', pady=self.row_spacing)
+
         self.ingredients_frame = IngredientsPctItem(self.scrollable_frame)
-        self.ingredients_frame.grid(row=3, column=0, columnspan=2, sticky='nsew', pady=10)
+        self.ingredients_frame.grid(row=5, column=0, columnspan=2, sticky='nsew', pady=10)
 
         self.levain_frame = LevainItem(self.scrollable_frame)
-        self.levain_frame.grid(row=4, column=0, columnspan=2, sticky='nsew', pady=10)
+        self.levain_frame.grid(row=6, column=0, columnspan=2, sticky='nsew', pady=10)
