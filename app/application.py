@@ -13,7 +13,7 @@ class Application(ttk.Frame):
         super().__init__(root)
         self.pack(fill='both', expand=True)
         self.root = root
-        self.rowconfigure(1, minsize=1000, weight=1)
+        self.rowconfigure(1, minsize=900, weight=1)
         self.columnconfigure(1, minsize=900, weight=1)
         self.root.title('Stretch and fold')
         self.root.geometry("+400+5")

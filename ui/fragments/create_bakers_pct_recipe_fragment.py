@@ -3,9 +3,11 @@ from tkinter import ttk
 
 from domain.types.ingredient_types import IngredientTypes
 from ui.items.ingredients_pct_item import IngredientsPctItem
+from ui.items.levain_item import LevainItem
+from ui.base.scrollable_frame import ScrollableFrame
 
 
-class CreateBakersPctRecipeFragment(ttk.Frame):
+class CreateBakersPctRecipeFragment(ScrollableFrame):
     def __init__(self, parent, *args, **kwargs):
         super().__init__(parent, *args, padding="20 20 20 20", **kwargs)
         self.rowconfigure(0, minsize=20)
@@ -26,20 +28,23 @@ class CreateBakersPctRecipeFragment(ttk.Frame):
         ttk.Style().configure(self.basic_label_style, font="Helvetica 12")
         
     def create_content(self):
-        self.title_label = ttk.Label(self, text='Recipe title: ', style=self.basic_label_style)
+        self.title_label = ttk.Label(self.scrollable_frame, text='Recipe title: ', style=self.basic_label_style)
         self.title_label.grid(row=0, column=0, sticky="nsew", pady=self.row_spacing)
-        self.title_entry = ttk.Entry(self)
+        self.title_entry = ttk.Entry(self.scrollable_frame)
         self.title_entry.grid(row=0, column=1, sticky="nsew", pady=self.row_spacing)
 
-        self.n_dough_balls_label = ttk.Label(self, text='Number of dough balls: ', style=self.basic_label_style)
+        self.n_dough_balls_label = ttk.Label(self.scrollable_frame, text='Number of dough balls: ', style=self.basic_label_style)
         self.n_dough_balls_label.grid(row=1, column=0, sticky="nsew", pady=self.row_spacing)
-        self.n_dough_balls_entry = ttk.Entry(self)
+        self.n_dough_balls_entry = ttk.Entry(self.scrollable_frame)
         self.n_dough_balls_entry.grid(row=1, column=1, sticky="nsew", pady=self.row_spacing)
 
-        self.dough_ball_weight_label = ttk.Label(self, text='Weight per dough ball [grams]: ', style=self.basic_label_style)
+        self.dough_ball_weight_label = ttk.Label(self.scrollable_frame, text='Weight per dough ball [grams]: ', style=self.basic_label_style)
         self.dough_ball_weight_label.grid(row=2, column=0, sticky="nsew", pady=self.row_spacing)
-        self.dough_ball_weight_entry = ttk.Entry(self)
+        self.dough_ball_weight_entry = ttk.Entry(self.scrollable_frame)
         self.dough_ball_weight_entry.grid(row=2, column=1, sticky="nsew", pady=self.row_spacing)
 
-        self.ingredients_frame = IngredientsPctItem(self)
+        self.ingredients_frame = IngredientsPctItem(self.scrollable_frame)
         self.ingredients_frame.grid(row=3, column=0, columnspan=2, sticky='nsew', pady=10)
+
+        self.levain_frame = LevainItem(self.scrollable_frame)
+        self.levain_frame.grid(row=4, column=0, columnspan=2, sticky='nsew', pady=10)

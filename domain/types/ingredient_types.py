@@ -1,14 +1,12 @@
 
 
 class IngredientTypes():
-    main_flour = 'Main flour'
-    main_liquid = 'Main liquid'
     flour = 'Flour'
     liquid = 'Liquid'
     levain = 'Levain'
-    sourdough_starter = 'Sourdough starter'
     salt = 'Salt'
-    seed = 'Seed'
+    sourdough_starter = 'Sourdough starter'
+    other = 'Other'
 
     all_types = [
         flour,
@@ -16,5 +14,5 @@ class IngredientTypes():
         levain,
         salt,
         sourdough_starter,
-        seed
+        other
     ]
