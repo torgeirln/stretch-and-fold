@@ -16,3 +16,11 @@ class IngredientTypes():
         sourdough_starter,
         other
     ]
+
+    combobox_types = [
+        flour,
+        liquid,
+        salt,
+        other
+    ]
+    
