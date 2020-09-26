@@ -1,11 +1,12 @@
 import tkinter as tk
 from tkinter import ttk
 
+from domain.models.levain_models import LevainWeight
 from ui.styles.recipe_styles import header_style, ingredient_style
 
 
 class LevainWeightsPresenterItem(ttk.Frame):
-    def __init__(self, parent, levain, *args, **kwargs):
+    def __init__(self, parent, levain: LevainWeight, *args, **kwargs):
         super().__init__(parent, *args, **kwargs)
         self.levain = levain
         self.create_content()
@@ -34,21 +35,3 @@ class LevainWeightsPresenterItem(ttk.Frame):
         ttk.Label(self, text=f'{self.levain.liquid:.0f} g', style=ingredient_style()).grid(
             row=3, column=1, sticky='ew', padx=10, pady=2
         )
-        # i = 0
-        # for key, value in self.levain.items():
-        #     i += 1
-        #     ttk.Label(self, text=key, style=ingredient_style()).grid(
-        #         row=i+1,
-        #         column=0,
-        #         sticky='ew',
-        #         padx=10,
-        #         pady=2
-        #     )
-        #     ttk.Label(self, text=f'{value} g', style=ingredient_style()).grid(
-        #         row=i+1,
-        #         column=1,
-        #         sticky='ew',
-        #         padx=10,
-        #         pady=2
-        #     )
-        

@@ -14,4 +14,3 @@ class LevainWeight:
     flour: float
     liquid: float
     starter: float
-

@@ -36,7 +36,7 @@ class Application(ttk.Frame):
         # self.set_currernt_fragment(CreateBakersPctRecipeFragment(self, self.view_model))
 
     def show_recipe(self, recipe):
-        recipe_fragment = RecipeFragment(self, recipe)
+        recipe_fragment = RecipeFragment(self, recipe, self.view_model)
         self.title_bar.configure(text=recipe.title)
         self.replace_currernt_fragment(recipe_fragment)
 

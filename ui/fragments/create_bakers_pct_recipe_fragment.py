@@ -9,7 +9,7 @@ from domain.models.response_models import ResponseStates
 from domain.models.recipe_models import NewRecipe
 from ui.items.inputs.ingredients_pcts_input import IngredientsPctsInputItem
 from ui.items.inputs.levain_pcts_input import LevainPctsInputItem
-from ui.items.inputs.desired_result_input import DesiredResultInputItem
+from ui.items.inputs.overview_input import OverviewInputItem
 from ui.items.presenters.ingredients_weights_presenter import IngredientsWeightsPresenterItem
 from ui.items.presenters.levain_weigts_presenter import LevainWeightsPresenterItem
 from ui.base.scrollable_frame import ScrollableFrame
@@ -63,11 +63,11 @@ class CreateBakersPctRecipeFragment(ScrollableFrame):
         self.add_image_label = ttk.Label(self.scrollable_frame, text='Default')
         self.add_image_label.grid(row=3, column=1, sticky='w')
 
-        self.desired_result_frame = DesiredResultInputItem(
+        self.overview_input_frame = OverviewInputItem(
             self.scrollable_frame,
             levain_entry_callback=self.on_levain_entry_changed
         )
-        self.desired_result_frame.grid(row=5, column=0, columnspan=2, sticky='nsew', pady=10)
+        self.overview_input_frame.grid(row=5, column=0, columnspan=2, sticky='nsew', pady=10)
 
         self.levain_frame = LevainPctsInputItem(self.scrollable_frame)
         self._show_levain_frame()
@@ -110,24 +110,24 @@ class CreateBakersPctRecipeFragment(ScrollableFrame):
         print('Sourdough recipe checkbox clicked!')
         if self.sourdough_recipe_checkbox_var.get() == 0:
             print('- Removing sourdough items')
-            self.desired_result_frame.hide_levain_input()
+            self.overview_input_frame.hide_levain_input()
             self._hide_levain_frame()
             self.ingredients_frame.hide_levain()
         else:
             print('- Adding sourdough items')
-            self.desired_result_frame.show_levain_input()
+            self.overview_input_frame.show_levain_input()
             self._show_levain_frame()
             self.ingredients_frame.show_levain()
         
     def on_show_weights_clicked(self, *args):
         print('Show weights button clicked!')
+        overview = self.overview_input_frame.get_overview()
         ingredients_pct = self.ingredients_frame.get_ingredients()
-        levain = self.levain_frame.get_pcts()
-        total_dough_weight = float(self.desired_result_frame.get_dough_weight())
+        levain = self.levain_frame.get_levain()
         self.view_model.compute_recipe_weights(
             self.show_weights,
-            total_dough_weight,
-            self.desired_result_frame.get_desired_result(),
+            overview.weight,
+            overview,
             ingredients_pct, 
             levain
         )
@@ -158,8 +158,8 @@ class CreateBakersPctRecipeFragment(ScrollableFrame):
             image_path='data/local/included/images/sourdough_bread.jpg',
             is_sourdough=self.sourdough_recipe_checkbox_var.get(),
             ingredients=self.ingredients_frame.get_ingredients(),
-            levain=self.levain_frame.get_pcts(),
-            overview=self.desired_result_frame.get_desired_result()
+            levain=self.levain_frame.get_levain(),
+            overview=self.overview_input_frame.get_overview()
         )
         return new_recipe
 

@@ -1,17 +1,21 @@
 import tkinter as tk
 from tkinter import ttk
 
-from ui.base.scrollable_frame import ScrollableFrame
 from ui.base.image_frame import ImageFrame
+from ui.base.scrollable_frame import ScrollableFrame
 from ui.items.presenters.ingredients_weights_presenter import IngredientsWeightsPresenterItem
+from ui.items.presenters.ingredients_pct_presenter import IngredientsPctPresenterItem
+from ui.items.presenters.levain_pct_presenter import LevainPctPresenterItem
 from ui.items.presenters.levain_weigts_presenter import LevainWeightsPresenterItem
+from ui.items.presenters.overview_presenter import OverviewPresenterFrame
 from ui.styles.recipe_styles import description_style, header_style, ingredient_style
 
 
 class RecipeFragment(ScrollableFrame):
-    def __init__(self, parent, recipe, *args, **kwargs):
+    def __init__(self, parent, recipe, view_model, *args, **kwargs):
         super().__init__(parent, *args, **kwargs)
         self.recipe = recipe
+        self.view_model = view_model
         self.init_constants()
         self.create_content()
     
@@ -20,6 +24,7 @@ class RecipeFragment(ScrollableFrame):
         self.main_padx = 20
         
     def create_content(self):
+        # Header 
         self.description_label = ttk.Label(
             self.scrollable_frame, 
             text=self.recipe.description, 
@@ -28,25 +33,70 @@ class RecipeFragment(ScrollableFrame):
             wraplength=450
         )
         self.description_label.grid(row=1, column=0, sticky="new", padx=self.main_padx, pady=10)
-        
         self.image_frame = ImageFrame(self.scrollable_frame, self.recipe.image_path, size=(128*2, 128*2))
-        self.image_frame.grid(row=2, column=1, rowspan=2, sticky='ns', padx=5)
-
-        self.ingredients_frame = IngredientsWeightsPresenterItem(
-            self.scrollable_frame,
-            self.recipe.ingredients
+        self.image_frame.grid(row=1, column=1, rowspan=2, sticky='new', padx=5)
+        # Overview
+        self.overview_presenter_frame = OverviewPresenterFrame(
+            self.scrollable_frame, self.recipe.overview)
+        self.overview_presenter_frame.grid(row=2, column=0, sticky='news', padx=self.main_padx, pady=10)
+        # Levain
+        self.levain_pct_presenter_frame = LevainPctPresenterItem(
+            self.scrollable_frame, self.recipe.levain)
+        self.levain_pct_presenter_frame.grid(row=4, column=0, sticky='news', padx=self.main_padx, pady=10)
+        # Ingredients
+        self.ingredients_pct_presenter_frame = IngredientsPctPresenterItem(
+            self.scrollable_frame, self.recipe.ingredients)
+        self.ingredients_pct_presenter_frame.grid(row=5, column=0, sticky='news', padx=self.main_padx, pady=10)
+        # Inputs for weights calculation
+        self.weights_input_frame = ttk.Frame(self.scrollable_frame)
+        ttk.Label(self.weights_input_frame, text='Total dough weight', style=header_style()).grid(
+            sticky='ew', pady=5
         )
-        self.ingredients_frame.grid(row=3, column=0, sticky='new', padx=self.main_padx, pady=10)
+        # - Item weight
+        ttk.Label(self.weights_input_frame, text=f'Item weight [g]', style=ingredient_style()).grid(
+            row=1, column=0, sticky='ew', padx=10, pady=2
+        )
+        self.item_weight_var = tk.StringVar()
+        self.item_weight_var.set(f'{self.recipe.overview.weight:.0f}')
+        self.item_weight_var.trace("w", self.on_total_dough_weight_changed)
+        self.item_weight_enty = ttk.Entry(
+            self.weights_input_frame, textvariable=self.item_weight_var
+        )
+        self.item_weight_enty.grid(row=1, column=1, sticky='ew')
+        # - Number of items
+        ttk.Label(self.weights_input_frame, text=f'Number of items', style=ingredient_style()).grid(
+            row=2, column=0, sticky='ew', padx=10, pady=2
+        )
+        self.number_of_items_var = tk.StringVar()
+        self.number_of_items_var.trace("w", self.on_total_dough_weight_changed)
+        self.number_of_items_var.set('2')
+        self.number_of_items_enty = ttk.Entry(
+            self.weights_input_frame, textvariable=self.number_of_items_var
+        )
+        self.number_of_items_enty.grid(row=2, column=1, sticky='ew')
+        self.weights_input_frame.grid(row=6, column=0, sticky='new', padx=self.main_padx, pady=10)
 
-        self.levain_frame = LevainWeightsPresenterItem(
-            self.scrollable_frame,
+    def on_total_dough_weight_changed(self, *args):
+        print('on_total_dough_weight_changed')
+        total_dough_weight = float(self.item_weight_var.get()) * int(self.number_of_items_var.get())
+        self.view_model.compute_recipe_weights(
+            self.show_weights,
+            total_dough_weight,
+            self.recipe.overview,
+            self.recipe.ingredients, 
             self.recipe.levain
         )
-        self.levain_frame.grid(row=4, column=0, sticky='new', padx=self.main_padx, pady=10)
-
-        self.bakers_per_header_label = ttk.Label(
+        
+    def show_weights(self, ingreidents_weights, levain):
+        total_dough_weight = 0
+        for ingredient in ingreidents_weights:
+            total_dough_weight += ingredient.amount
+            print(f'{ingredient.name} {ingredient.type_} {ingredient.amount}')
+        print(f'total_dough_weight = {total_dough_weight}')
+        self.levain_weights_frame = LevainWeightsPresenterItem(self.scrollable_frame, levain)
+        self.levain_weights_frame.grid(row=15, column=0, columnspan=2, sticky='nsew', padx=self.main_padx, pady=10)
+        self.ingredients_weights_frame = IngredientsWeightsPresenterItem(
             self.scrollable_frame,
-            text='Baker\'s percentages',
-            style=header_style()
+            ingreidents_weights
         )
-        self.bakers_per_header_label.grid(row=5, column=0, sticky="ew", padx=self.main_padx, pady=10)
+        self.ingredients_weights_frame.grid(row=16, column=0, columnspan=2, sticky='nsew', padx=self.main_padx, pady=10)

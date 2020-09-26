@@ -1,6 +1,6 @@
 # from domain.models.ingredient_models import Ingredient, LevainWeightModel, DesiredResultModel
 from domain.models.ingredient_models import Ingredient
-from domain.models.levain_models import LevainWeight
+from domain.models.levain_models import LevainPct
 from domain.models.overview_models import Overview
 from domain.types.ingredient_types import IngredientTypes
 from domain.constants.paths import rel_image_path
@@ -45,9 +45,8 @@ class Recipe1():
         salt=2.3, 
         levain=22
     )
-    levain = LevainWeight(
-        total=97,
-        flour=26,
-        liquid=46,
-        starter=24
+    levain = LevainPct(
+        hydration=175,
+        ratio=25,
+        starter_hydration=175
     )

@@ -38,7 +38,7 @@ class LevainPctsInputItem(ttk.Frame):
         self.starter_hydration_entry.insert(0, 175)
         self.starter_hydration_entry.grid(row=3, column=1, sticky='ew', pady=2)
 
-    def get_pcts(self):
+    def get_levain(self):
         return LevainPct(
             float(self.hydration_entry.get()),
             float(self.starter_ratio_enty.get()),

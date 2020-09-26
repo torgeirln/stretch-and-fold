@@ -5,7 +5,7 @@ from domain.models.overview_models import Overview
 from ui.styles.recipe_styles import header_style, ingredient_style
 
 
-class DesiredResultInputItem(ttk.Frame):
+class OverviewInputItem(ttk.Frame):
     def __init__(self, parent, levain_entry_callback, *args, **kwargs):
         super().__init__(parent, *args, **kwargs)
         self.levain_entry_callback = levain_entry_callback
@@ -17,8 +17,8 @@ class DesiredResultInputItem(ttk.Frame):
         self.row_spacing = 2
         
     def create_content(self):
-        self.desired_result_label = ttk.Label(self, text='Desired result', style=header_style())
-        self.desired_result_label.grid(row=0, column=0, sticky='nsew', pady=self.row_spacing)
+        self.overview_label = ttk.Label(self, text='Overview', style=header_style())
+        self.overview_label.grid(row=0, column=0, sticky='nsew', pady=self.row_spacing)
         # - Weight per item
         self.item_weight_label = ttk.Label(self, text='Weight per item: ', style=ingredient_style())
         self.item_weight_label.grid(row=1, column=0, sticky="nsew", padx=self.main_padx, pady=self.row_spacing)
@@ -62,7 +62,7 @@ class DesiredResultInputItem(ttk.Frame):
     def get_dough_weight(self):
         return self.item_weight_entry.get()
     
-    def get_desired_result(self):
+    def get_overview(self):
         return Overview(
             float(self.item_weight_entry.get()),
             float(self.item_hydartion_entry.get()),
