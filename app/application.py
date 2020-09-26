@@ -32,8 +32,7 @@ class Application(ttk.Frame):
         self.side_panel = SidePanelFragment(self)
         self.side_panel.grid(row=0, rowspan=2, column=0, sticky="ns")
 
-        self.summary_fragment = SummaryFragment(self, self.view_model)
-        self.set_currernt_fragment(self.summary_fragment)
+        self.set_currernt_fragment(SummaryFragment(self, self.view_model))
         # self.set_currernt_fragment(CreateBakersPctRecipeFragment(self, self.view_model))
 
     def show_recipe(self, recipe):
@@ -41,10 +40,10 @@ class Application(ttk.Frame):
         self.title_bar.configure(text=recipe.title)
         self.replace_currernt_fragment(recipe_fragment)
 
-    def show_recipes_overview(self):
-        print('- show_recipes_overview')
+    def show_summary_fragment(self):
+        print('- show_summary_fragment')
         self.title_bar.configure(text='All recipes')
-        self.replace_currernt_fragment(self.summary_fragment)
+        self.replace_currernt_fragment(SummaryFragment(self, self.view_model))
 
     def show_create_new_recipe(self):
         print('- show_create_new_recipe')
@@ -57,6 +56,5 @@ class Application(ttk.Frame):
 
     def replace_currernt_fragment(self, fragment):
         self.current_fragment.grid_forget()
+        self.current_fragment = None
         self.set_currernt_fragment(fragment)
-
-    

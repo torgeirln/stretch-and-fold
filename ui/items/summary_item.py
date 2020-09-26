@@ -35,7 +35,7 @@ class SummaryItem(ttk.Frame):
         self.description_label.bind('<Button-1>', self.on_item_clicked)
         self.description_label.grid(row=1, column=0, sticky="new", pady=5, padx=5)
 
-        self.image_frame = ImageFrame(self, self.recipe.rel_image_path, size=(128, 128))
+        self.image_frame = ImageFrame(self, self.recipe.image_path, size=(128, 128))
         self.image_frame.bind('<Button-1>', self.on_item_clicked)
         self.image_frame.grid(row=1, column=1, sticky='nse', padx=5)
 

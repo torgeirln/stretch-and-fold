@@ -1,3 +1,6 @@
 .vscode/
 venv/
 __pycache__/
+
+tests/__out__
+data/local/added/recipes/

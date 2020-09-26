@@ -1,6 +1,7 @@
 import numpy as np
 
-from domain.models.ingredient_models import IngredientModel, LevainWeightModel
+from domain.models.ingredient_models import Ingredient
+from domain.models.levain_models import LevainWeight
 from domain.types.ingredient_types import IngredientTypes, LevainTypes
 
 
@@ -31,39 +32,39 @@ def bakerspcts2weights(total_dough_weight, desired_result, ingredients_pct, leva
     ingredients_weights = []
     other_ind = 0
     for ingredient in ingredients_pct:
-        if ingredient.type == IngredientTypes.flour:
-            new_ingredient = IngredientModel(
+        if ingredient.type_ == IngredientTypes.flour:
+            new_ingredient = Ingredient(
                 ingredient.name, 
-                ingredient.type,
+                ingredient.type_,
                 ingredient.amount/100 * x[0,0]
             )
-        elif ingredient.type == IngredientTypes.liquid:
-            new_ingredient = IngredientModel(
+        elif ingredient.type_ == IngredientTypes.liquid:
+            new_ingredient = Ingredient(
                 ingredient.name, 
-                ingredient.type,
+                ingredient.type_,
                 ingredient.amount/100 * x[1,0]
             )
-        elif ingredient.type == IngredientTypes.salt:
-            new_ingredient = IngredientModel(
+        elif ingredient.type_ == IngredientTypes.salt:
+            new_ingredient = Ingredient(
                 ingredient.name, 
-                ingredient.type,
+                ingredient.type_,
                 ingredient.amount/100 * x[2,0]
             )
-        elif ingredient.type == IngredientTypes.other:
-            new_ingredient = IngredientModel(
+        elif ingredient.type_ == IngredientTypes.other:
+            new_ingredient = Ingredient(
                 ingredient.name, 
-                ingredient.type,
+                ingredient.type_,
                 (ingredient.amount/100)/tot_other_pct * x[3,0]
             )
             other_ind += 1
-        elif ingredient.type == IngredientTypes.levain:
-            new_ingredient = IngredientModel(
+        elif ingredient.type_ == IngredientTypes.levain:
+            new_ingredient = Ingredient(
                 ingredient.name, 
-                ingredient.type,
+                ingredient.type_,
                 x[4,0]
             )
         ingredients_weights.append(new_ingredient)
-    levain = LevainWeightModel(
+    levain = LevainWeight(
         total=x[4,0], 
         flour=x[5,0], 
         liquid=x[6,0], 
@@ -138,22 +139,22 @@ def get_ingredient_counts(ingredients_pct):
     
     n_flour = 0
     for ingr in ingredients_pct:
-        if ingr.type == IngredientTypes.flour:
+        if ingr.type_ == IngredientTypes.flour:
             n_flour += 1
     
     n_liquid = 0
     for ingr in ingredients_pct:
-        if ingr.type == IngredientTypes.liquid:
+        if ingr.type_ == IngredientTypes.liquid:
             n_liquid += 1
 
     n_salt = 0
     for ingr in ingredients_pct:
-        if ingr.type == IngredientTypes.salt:
+        if ingr.type_ == IngredientTypes.salt:
             n_salt += 1
     
     n_other = 0
     for ingr in ingredients_pct:
-        if ingr.type == IngredientTypes.other:
+        if ingr.type_ == IngredientTypes.other:
             n_other += 1
 
     return n_flour, n_liquid, n_salt, n_other, n_levain
@@ -161,27 +162,27 @@ def get_ingredient_counts(ingredients_pct):
 def group_ingredients(ingredients_pct):
     flour_ingrs = []
     for ingr in ingredients_pct:
-        if ingr.type == IngredientTypes.flour:
+        if ingr.type_ == IngredientTypes.flour:
             flour_ingrs.append(ingr)
     
     liquid_ingrs = []
     for ingr in ingredients_pct:
-        if ingr.type == IngredientTypes.liquid:
+        if ingr.type_ == IngredientTypes.liquid:
             liquid_ingrs.append(ingr)
 
     salt_ingrs = []
     for ingr in ingredients_pct:
-        if ingr.type == IngredientTypes.salt:
+        if ingr.type_ == IngredientTypes.salt:
             salt_ingrs.append(ingr)
     
     other_ingrs = []
     for ingr in ingredients_pct:
-        if ingr.type == IngredientTypes.other:
+        if ingr.type_ == IngredientTypes.other:
             other_ingrs.append(ingr)
 
     levain_ingrs = []
     for ingr in ingredients_pct:
-        if ingr.type == IngredientTypes.levain:
+        if ingr.type_ == IngredientTypes.levain:
             levain_ingrs.append(ingr)
 
     return flour_ingrs, liquid_ingrs, salt_ingrs, other_ingrs, levain_ingrs
@@ -202,7 +203,7 @@ def print_ingr_counts(n_flour, n_liquid, n_salt, n_other, n_levain):
 def remove_ingredients_wo_type(ingredients):
     ingredients_w_type = []
     for ingredient in ingredients:
-        if ingredient.type in IngredientTypes.all_types:
+        if ingredient.type_ in IngredientTypes.all_types:
             ingredients_w_type.append(ingredient)
     return ingredients_w_type
     

@@ -29,7 +29,7 @@ class RecipeFragment(ScrollableFrame):
         )
         self.description_label.grid(row=1, column=0, sticky="new", padx=self.main_padx, pady=10)
         
-        self.image_frame = ImageFrame(self.scrollable_frame, self.recipe.rel_image_path, size=(128*2, 128*2))
+        self.image_frame = ImageFrame(self.scrollable_frame, self.recipe.image_path, size=(128*2, 128*2))
         self.image_frame.grid(row=2, column=1, rowspan=2, sticky='ns', padx=5)
 
         self.ingredients_frame = IngredientsWeightsPresenterItem(

@@ -23,7 +23,7 @@ class SidePanelFragment(ttk.Frame):
 
     def on_recipes_button_clicked(self, *args):
         print('Recipes button clicked!')
-        self.parent.show_recipes_overview()
+        self.parent.show_summary_fragment()
 
     def on_create_new_recipe_button_clicked(self, *args):
         print('Create new recipe button clicked!')

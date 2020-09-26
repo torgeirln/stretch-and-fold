@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 
 from domain.types.ingredient_types import LevainTypes
-from domain.models.ingredient_models import LevainPctModel
+from domain.models.levain_models import LevainPct
 from ui.styles.recipe_styles import header_style, ingredient_style
 
 
@@ -39,7 +39,7 @@ class LevainPctsInputItem(ttk.Frame):
         self.starter_hydration_entry.grid(row=3, column=1, sticky='ew', pady=2)
 
     def get_pcts(self):
-        return LevainPctModel(
+        return LevainPct(
             float(self.hydration_entry.get()),
             float(self.starter_ratio_enty.get()),
             float(self.starter_hydration_entry.get())

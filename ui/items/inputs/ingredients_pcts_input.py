@@ -3,7 +3,7 @@ from tkinter import ttk
 
 from domain.types.ingredient_types import IngredientTypes
 # from domain.models.ingredient_models import IngredientPctModel, SimpleIngredient
-from domain.models.ingredient_models import IngredientModel
+from domain.models.ingredient_models import Ingredient
 from ui.styles.recipe_styles import header_style, column_title_style
 
 
@@ -85,7 +85,7 @@ class IngredientsPctsInputItem(ttk.Frame):
                 type_ = entries[1].get()
                 pct = entries[2].get()
             try:
-                ingredients.append(IngredientModel(name, type_, float(pct)))
+                ingredients.append(Ingredient(name, type_, float(pct)))
             except:
                 pass
         if not self.include_levain:
