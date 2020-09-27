@@ -21,35 +21,44 @@ class LevainWeightsPresenterItem(ttk.Frame):
         self.actual_levain.grid(row=1, column=0, sticky='nsew')
 
         if self.add_buffert:
-            self.buffert_column_frame = ttk.Frame(self)
-            self.buffert_column_frame.grid(row=1, column=1, padx=30)
+            inital_buffert = 10 # Percent
+            buffert_padx = 40
+            self.buffert_header_frame = ttk.Frame(self)
+            self.buffert_header_frame.grid(row=0, column=1, sticky='ew', padx=buffert_padx)
             self.buffert_header_label = ttk.Label(
-                self.buffert_column_frame, text=f'Buffert', style=levain_buffert_header_style())
-            self.buffert_header_label.grid(row=0, column=0, columnspan=2, pady=5)
+                self.buffert_header_frame, 
+                text=f'Buffert, {self.get_buffert_levain(inital_buffert).total:.0f} g (', 
+                style=levain_buffert_header_style())
+            self.buffert_header_label.grid(row=0, column=0, pady=5)
 
             self.buffert_size_var = tk.StringVar()
             self.buffert_size_var.trace("w", self.on_buffert_size_changed)
-            self.buffert_size_var.set('10')
+            self.buffert_size_var.set(str(inital_buffert))
             self.buffert_size_entry = ttk.Entry(
-                self.buffert_column_frame, textvariable=self.buffert_size_var, width=3
+                self.buffert_header_frame, textvariable=self.buffert_size_var, width=3
             )
-            self.buffert_size_entry.grid(row=1, column=0, sticky='e')
-            ttk.Label(self.buffert_column_frame, text='%', style=ingredient_style()).grid(
-                row=1, column=1, sticky='w'
+            self.buffert_size_entry.grid(row=0, column=1, sticky='e')
+            ttk.Label(self.buffert_header_frame, text='%)', style=levain_buffert_header_style()).grid(
+                row=0, column=2, sticky='w'
             )
 
             self.buffert_levain = LevainWeightsFrame(self, self.get_buffert_levain())
-            self.buffert_levain.grid(row=1, column=2, sticky='new', padx=5)
+            self.buffert_levain.grid(row=1, column=1, sticky='new', padx=buffert_padx)
 
     def on_buffert_size_changed(self, *args):
         if self.add_buffert and self.buffert_levain is not None:
             print('on_buffert_size_changed')
-            self.buffert_levain.update_values(self.get_buffert_levain())
+            buffert_levain = self.get_buffert_levain()
+            self.buffert_header_label.configure(text=f'Buffert, {buffert_levain.total:.0f} g (')
+            self.buffert_levain.update_values(buffert_levain)
 
-    def get_buffert_levain(self):
+    def get_buffert_levain(self, buffert_size=None):
         print('get_buffert_levain')
-        print(f'- {self.buffert_size_var.get()}')
-        buffert_size = 1 + float(self.buffert_size_var.get()) / 100
+        if buffert_size is None:
+            print(f'- {self.buffert_size_var.get()}')
+            buffert_size = 1 + float(self.buffert_size_var.get()) / 100
+        else:
+            buffert_size = 1 + buffert_size / 100
         buffert_flour = self.levain.flour * buffert_size
         buffert_liquid = self.levain.liquid * buffert_size
         buffert_starter = self.levain.starter * buffert_size
