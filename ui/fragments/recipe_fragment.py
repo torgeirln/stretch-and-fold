@@ -62,7 +62,7 @@ class RecipeFragment(ScrollableFrame):
         self.item_weight_enty = ttk.Entry(
             self.weights_input_frame, textvariable=self.item_weight_var
         )
-        self.item_weight_enty.grid(row=1, column=1, sticky='ew')
+        self.item_weight_enty.grid(row=1, column=1, sticky='nw')
         # - Number of items
         ttk.Label(self.weights_input_frame, text=f'Number of items', style=ingredient_style()).grid(
             row=2, column=0, sticky='ew', padx=10, pady=2
@@ -73,7 +73,7 @@ class RecipeFragment(ScrollableFrame):
         self.number_of_items_enty = ttk.Entry(
             self.weights_input_frame, textvariable=self.number_of_items_var
         )
-        self.number_of_items_enty.grid(row=2, column=1, sticky='ew')
+        self.number_of_items_enty.grid(row=2, column=1, sticky='nw')
         self.weights_input_frame.grid(row=6, column=0, sticky='new', padx=self.main_padx, pady=10)
 
     def on_total_dough_weight_changed(self, *args):
@@ -93,7 +93,7 @@ class RecipeFragment(ScrollableFrame):
             total_dough_weight += ingredient.amount
             print(f'{ingredient.name} {ingredient.type_} {ingredient.amount}')
         print(f'total_dough_weight = {total_dough_weight}')
-        self.levain_weights_frame = LevainWeightsPresenterItem(self.scrollable_frame, levain)
+        self.levain_weights_frame = LevainWeightsPresenterItem(self.scrollable_frame, levain, add_buffert=True)
         self.levain_weights_frame.grid(row=15, column=0, columnspan=2, sticky='nsew', padx=self.main_padx, pady=10)
         self.ingredients_weights_frame = IngredientsWeightsPresenterItem(
             self.scrollable_frame,

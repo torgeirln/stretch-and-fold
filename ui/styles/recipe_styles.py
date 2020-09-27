@@ -20,3 +20,8 @@ def ingredient_style():
     name = 'Recipe_Ingredient.TLabel'
     ttk.Style().configure(name, font="Helvetica 12")
     return name
+
+def levain_buffert_header_style():
+    name = 'Recipe_Levain_Buffert_Header.TLabel'
+    ttk.Style().configure(name, font="Helvetica 12 bold italic")
+    return name
