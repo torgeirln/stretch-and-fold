@@ -2,7 +2,6 @@ from dataclasses import asdict
 import json
 import os
 
-from data.local.included.recipes.recipe1 import Recipe1
 from domain.models.recipe_models import Recipe
 
 
@@ -19,7 +18,15 @@ class Repository():
         return all_recipes
 
     def get_included_recipes(self):
-        return [Recipe1()]
+        included_recipes = []
+        for (dirpath, dirnames, filenames) in os.walk(self.included_path):
+            print(filenames)
+            for filename in filenames:
+                with open(f'{self.included_path}/{filename}', 'r') as recipe:
+                    included_recipes.append(
+                        Recipe(**json.load(recipe))
+                    )
+        return included_recipes
 
     def get_added_recipes(self):
         added_recipes = []

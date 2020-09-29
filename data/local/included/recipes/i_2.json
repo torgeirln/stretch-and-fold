@@ -1,0 +1,17 @@
+{
+	"__id__": -2, 
+	"title": "Basic sourdough bread v.2", 
+	"category": "Sourdough bread", 
+	"description": "This bread has a bit higher content of whole wheat flour (30%), and a hydration of 75%. This makes it both delicious and easy to handle during the bake!\n", 
+	"image_path": "data/local/included/images/sourdough_bread.jpg", 
+	"is_sourdough": 1, 
+	"ingredients": [
+		{"name": "Levain", "type_": "Levain", "amount": 20.0}, 
+		{"name": "Vetemj\u00f6l special", "type_": "Flour", "amount": 70.0}, 
+		{"name": "Grahamsmj\u00f6l", "type_": "Flour", "amount": 30.0}, 
+		{"name": "Vatten", "type_": "Liquid", "amount": 100.0}, 
+		{"name": "Finkornigt salt", "type_": "Salt", "amount": 100.0}
+	], 
+	"levain": {"hydration": 175.0, "ratio": 25.0, "starter_hydration": 175.0}, 
+	"overview": {"weight": 700.0, "hydration": 75.0, "salt": 2.3, "levain": 20.0}
+}
