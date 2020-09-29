@@ -11,6 +11,7 @@ class Recipe:
     """ Model for saved recipe. Has an id. """
     __id__: int
     title: str
+    category: str
     description: str
     image_path: str
     is_sourdough: bool
@@ -33,6 +34,7 @@ class Recipe:
 class NewRecipe:
     """ Model for new recipes. Has no id. """
     title: str
+    category: str
     description: str
     image_path: str
     is_sourdough: bool

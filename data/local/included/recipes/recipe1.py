@@ -8,6 +8,7 @@ from domain.constants.paths import rel_image_path
 
 class Recipe1():
     title = 'Sourdough bread v.1'
+    category = 'Sourdough bread'
     description = 'This sourdough bread recipe gives you a delicious bread. \
     The amount of whole grain wheat flour is quite high, which results in a bread with a lot of tang!'
     image_path = rel_image_path

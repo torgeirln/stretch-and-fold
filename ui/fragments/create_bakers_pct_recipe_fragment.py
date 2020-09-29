@@ -33,18 +33,24 @@ class CreateBakersPctRecipeFragment(ScrollableFrame):
         self.row_spacing = 5
         
     def create_content(self):
-        self.title_label = ttk.Label(self.scrollable_frame, text='Recipe title: ', style=ingredient_style())
-        self.title_label.grid(row=0, column=0, sticky="nsew", pady=self.row_spacing)
+        ttk.Label(self.scrollable_frame, text='Recipe title: ', style=ingredient_style()).grid(
+            row=0, column=0, sticky="nsew", pady=self.row_spacing)
         self.title_entry = ttk.Entry(self.scrollable_frame)
         self.title_entry.grid(row=0, column=1, sticky="nsew", pady=self.row_spacing)
 
-        self.description_label = ttk.Label(self.scrollable_frame, text='Description: ', style=ingredient_style())
-        self.description_label.grid(row=1, column=0, sticky='new')
-        self.description_entry = ScrolledText(self.scrollable_frame, width=70, height=7)
-        self.description_entry.grid(row=1, column=1, sticky='nsew', pady=self.row_spacing)
+        ttk.Label(self.scrollable_frame, text='Category: ', style=ingredient_style()).grid(
+            row=1, column=0, sticky='news', pady=self.row_spacing)
+        self.category_entry = ttk.Entry(self.scrollable_frame)
+        self.category_entry.grid(row=1, column=1, sticky='nsew', pady=self.row_spacing)
 
-        self.sourdough_recipe_label = ttk.Label(self.scrollable_frame, text='Sourdough recipe', style=ingredient_style())
-        self.sourdough_recipe_label.grid(row=2, column=0, sticky='nsew', pady=self.row_spacing)
+        ttk.Label(self.scrollable_frame, text='Description: ', style=ingredient_style()).grid(
+            row=2, column=0, sticky='new'
+        )
+        self.description_entry = ScrolledText(self.scrollable_frame, width=70, height=7)
+        self.description_entry.grid(row=2, column=1, sticky='nsew', pady=self.row_spacing)
+
+        ttk.Label(self.scrollable_frame, text='Sourdough recipe', style=ingredient_style()).grid(
+            row=3, column=0, sticky='nsew', pady=self.row_spacing)
         self.sourdough_recipe_checkbox_var = tk.IntVar()
         self.sourdough_recipe_checkbox_var.set(1)
         self.sourdough_recipe_checkbox = ttk.Checkbutton(
@@ -52,16 +58,16 @@ class CreateBakersPctRecipeFragment(ScrollableFrame):
             variable=self.sourdough_recipe_checkbox_var, 
             command=self.on_sourdough_recipe_clicked
         )
-        self.sourdough_recipe_checkbox.grid(row=2, column=1, sticky='w')
+        self.sourdough_recipe_checkbox.grid(row=3, column=1, sticky='w')
 
         self.add_image_button = ttk.Button(
             self.scrollable_frame, 
             text='Add image', 
             command=self.on_add_image_button_clicked
         )
-        self.add_image_button.grid(row=3, column=0, sticky='w', pady=self.row_spacing)
+        self.add_image_button.grid(row=4, column=0, sticky='w', pady=self.row_spacing)
         self.add_image_label = ttk.Label(self.scrollable_frame, text='Default')
-        self.add_image_label.grid(row=3, column=1, sticky='w')
+        self.add_image_label.grid(row=4, column=1, sticky='w')
 
         self.overview_input_frame = OverviewInputItem(
             self.scrollable_frame,
@@ -154,6 +160,7 @@ class CreateBakersPctRecipeFragment(ScrollableFrame):
     def get_recipe(self):
         new_recipe = NewRecipe(
             title=self.title_entry.get(),
+            category=self.category_entry.get(),
             description=self.description_entry.get("1.0", tk.END),
             image_path='data/local/included/images/sourdough_bread.jpg',
             is_sourdough=self.sourdough_recipe_checkbox_var.get(),

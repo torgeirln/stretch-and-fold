@@ -25,6 +25,12 @@ class RecipeFragment(ScrollableFrame):
         
     def create_content(self):
         # Header 
+        self.category_label = ttk.Label(self.scrollable_frame, text=f'- {self.recipe.category}', style=description_style())
+        self.category_label.grid(
+            row=0, column=0, sticky='new', padx=self.main_padx, pady=10
+        )
+        self.image_frame = ImageFrame(self.scrollable_frame, self.recipe.image_path, size=(128*2, 128*2))
+        self.image_frame.grid(row=0, column=2, rowspan=3, sticky='new', padx=5)
         self.description_label = ttk.Label(
             self.scrollable_frame, 
             text=self.recipe.description, 
@@ -32,21 +38,19 @@ class RecipeFragment(ScrollableFrame):
             justify='left',
             wraplength=450
         )
-        self.description_label.grid(row=1, column=0, sticky="new", padx=self.main_padx, pady=10)
-        self.image_frame = ImageFrame(self.scrollable_frame, self.recipe.image_path, size=(128*2, 128*2))
-        self.image_frame.grid(row=1, column=1, rowspan=2, sticky='new', padx=5)
+        self.description_label.grid(row=1, column=0, columnspan=2, sticky="new", padx=self.main_padx, pady=10)
         # Overview
         self.overview_presenter_frame = OverviewPresenterFrame(
             self.scrollable_frame, self.recipe.overview)
-        self.overview_presenter_frame.grid(row=2, column=0, sticky='news', padx=self.main_padx, pady=10)
+        self.overview_presenter_frame.grid(row=2, column=0, sticky='w', padx=self.main_padx, pady=10)
         # Levain
         self.levain_pct_presenter_frame = LevainPctPresenterItem(
             self.scrollable_frame, self.recipe.levain)
-        self.levain_pct_presenter_frame.grid(row=4, column=0, sticky='news', padx=self.main_padx, pady=10)
+        self.levain_pct_presenter_frame.grid(row=2, column=1, sticky='w', pady=10)
         # Ingredients
         self.ingredients_pct_presenter_frame = IngredientsPctPresenterItem(
             self.scrollable_frame, self.recipe.ingredients)
-        self.ingredients_pct_presenter_frame.grid(row=5, column=0, sticky='news', padx=self.main_padx, pady=10)
+        self.ingredients_pct_presenter_frame.grid(row=5, column=0, columnspan=2, sticky='news', padx=self.main_padx, pady=10)
         # Inputs for weights calculation
         self.weights_input_frame = ttk.Frame(self.scrollable_frame)
         ttk.Label(self.weights_input_frame, text='Total dough weight', style=header_style()).grid(
@@ -74,7 +78,7 @@ class RecipeFragment(ScrollableFrame):
             self.weights_input_frame, textvariable=self.number_of_items_var
         )
         self.number_of_items_enty.grid(row=2, column=1, sticky='nw')
-        self.weights_input_frame.grid(row=6, column=0, sticky='new', padx=self.main_padx, pady=10)
+        self.weights_input_frame.grid(row=6, column=0, columnspan=2, sticky='new', padx=self.main_padx, pady=10)
 
     def on_total_dough_weight_changed(self, *args):
         print('on_total_dough_weight_changed')
