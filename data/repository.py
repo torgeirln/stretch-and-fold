@@ -20,7 +20,6 @@ class Repository():
     def get_included_recipes(self):
         included_recipes = []
         for (dirpath, dirnames, filenames) in os.walk(self.included_path):
-            print(filenames)
             for filename in filenames:
                 with open(f'{self.included_path}/{filename}', 'r') as recipe:
                     included_recipes.append(

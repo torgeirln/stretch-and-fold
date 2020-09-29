@@ -15,6 +15,7 @@ class LevainPctsInputItem(ttk.Frame):
     def init_constants(self):
         self.main_padx = 5
         self.row_spacing = 2
+        self.entry_width = 5
         
     def create_content(self):
         self.levain_title = ttk.Label(self, text='Levain', style=header_style())
@@ -22,19 +23,19 @@ class LevainPctsInputItem(ttk.Frame):
 
         self.hydration_label = ttk.Label(self, text='Hydration:', style=ingredient_style())
         self.hydration_label.grid(row=1, column=0, sticky='ew', padx=self.main_padx, pady=self.row_spacing)
-        self.hydration_entry = ttk.Entry(self)
+        self.hydration_entry = ttk.Entry(self, width=self.entry_width)
         self.hydration_entry.insert(0, 175)
         self.hydration_entry.grid(row=1, column=1, sticky='ew', pady=2)
 
         self.starter_ratio_label = ttk.Label(self, text='Ratio of starter:', style=ingredient_style())
         self.starter_ratio_label.grid(row=2, column=0, sticky='ew', padx=self.main_padx, pady=self.row_spacing)
-        self.starter_ratio_enty = ttk.Entry(self)
+        self.starter_ratio_enty = ttk.Entry(self, width=self.entry_width)
         self.starter_ratio_enty.insert(0, 25)
         self.starter_ratio_enty.grid(row=2, column=1, sticky='ew', pady=2)
 
         self.starter_hydration_label = ttk.Label(self, text='Hydration of starter:', style=ingredient_style())
         self.starter_hydration_label.grid(row=3, column=0, sticky='ew', padx=self.main_padx, pady=self.row_spacing)
-        self.starter_hydration_entry = ttk.Entry(self)
+        self.starter_hydration_entry = ttk.Entry(self, width=self.entry_width)
         self.starter_hydration_entry.insert(0, 175)
         self.starter_hydration_entry.grid(row=3, column=1, sticky='ew', pady=2)
 

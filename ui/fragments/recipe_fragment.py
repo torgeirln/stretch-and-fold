@@ -54,17 +54,17 @@ class RecipeFragment(ScrollableFrame):
         # Inputs for weights calculation
         self.weights_input_frame = ttk.Frame(self.scrollable_frame)
         ttk.Label(self.weights_input_frame, text='Total dough weight', style=header_style()).grid(
-            sticky='ew', pady=5
+            columnspan=2, sticky='ew', pady=5
         )
         # - Item weight
         ttk.Label(self.weights_input_frame, text=f'Item weight [g]', style=ingredient_style()).grid(
             row=1, column=0, sticky='ew', padx=10, pady=2
         )
         self.item_weight_var = tk.StringVar()
-        self.item_weight_var.set(f'{self.recipe.overview.weight:.0f}')
+        self.item_weight_var.set(f'{self.recipe.dough_size.item_weight:.0f}')
         self.item_weight_var.trace("w", self.on_total_dough_weight_changed)
         self.item_weight_enty = ttk.Entry(
-            self.weights_input_frame, textvariable=self.item_weight_var
+            self.weights_input_frame, textvariable=self.item_weight_var, width=5
         )
         self.item_weight_enty.grid(row=1, column=1, sticky='nw')
         # - Number of items
@@ -73,9 +73,9 @@ class RecipeFragment(ScrollableFrame):
         )
         self.number_of_items_var = tk.StringVar()
         self.number_of_items_var.trace("w", self.on_total_dough_weight_changed)
-        self.number_of_items_var.set('2')
+        self.number_of_items_var.set(f'{self.recipe.dough_size.n_items:.0f}')
         self.number_of_items_enty = ttk.Entry(
-            self.weights_input_frame, textvariable=self.number_of_items_var
+            self.weights_input_frame, textvariable=self.number_of_items_var, width=5
         )
         self.number_of_items_enty.grid(row=2, column=1, sticky='nw')
         self.weights_input_frame.grid(row=6, column=0, columnspan=2, sticky='new', padx=self.main_padx, pady=10)

@@ -13,5 +13,6 @@
 		{"name": "Finkornigt salt", "type_": "Salt", "amount": 100.0}
 	], 
 	"levain": {"hydration": 175.0, "ratio": 25.0, "starter_hydration": 175.0}, 
-	"overview": {"weight": 800.0, "hydration": 80.0, "salt": 2.3, "levain": 22.0}
+	"overview": {"hydration": 80.0, "salt": 2.3, "levain": 22.0},
+	"dough_size": {"item_weight": 800.0, "n_items": 2}
 }
