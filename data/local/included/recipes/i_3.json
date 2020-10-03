@@ -6,14 +6,15 @@
 	"image_path": "data/local/included/images/sourdough_bread.jpg", 
 	"is_sourdough": 1, 
 	"ingredients": [
-		{"name": "Levain", "type_": "Levain", "amount": 25.0}, 
-		{"name": "Vetemj\u00f6l special", "type_": "Flour", "amount": 75.0}, 
-		{"name": "Grahamsmj\u00f6l", "type_": "Flour", "amount": 20.0}, 
-		{"name": "Vatten", "type_": "Liquid", "amount": 100.0}, 
+		{"name": "Tipo 00", "type_": "Flour", "amount": 90.0}, 
+		{"name": "Semolina", "type_": "Flour", "amount": 10.0},
 		{"name": "Finkornigt salt", "type_": "Salt", "amount": 100.0}, 
-		{"name": "Maltmj\u00f6l", "type_": "Flour", "amount": 5.0}
+		{"name": "Vatten", "type_": "Liquid", "amount": 100.0},
+		{"name": "Levain", "type_": "Levain", "amount": 20.0},
+		{"name": "Diastatic malt", "type_": "Other", "amount": 2.0}, 
+		{"name": "Olivenolje", "type_": "Other", "amount": 2.8} 
 	], 
 	"levain": {"hydration": 175.0, "ratio": 25.0, "starter_hydration": 175.0}, 
-	"overview": {"hydration": 65.0, "salt": 2.4, "levain": 25.0},
+	"overview": {"hydration": 65.0, "salt": 2.4, "levain": 20.0},
 	"dough_size": {"item_weight": 200.0, "n_items": 4}
 }

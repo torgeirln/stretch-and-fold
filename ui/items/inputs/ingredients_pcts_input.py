@@ -56,6 +56,7 @@ class IngredientsPctsInputItem(ttk.Frame):
         type_combobox = ttk.Combobox(self, values=IngredientTypes.combobox_types)
         if type_ is not None:
             type_combobox.current(self._get_ingredient_index(type_))
+        type_combobox.bind("<MouseWheel>", self.empty_scroll_command)
         type_combobox.grid(row=current_row, column=1)
 
         pct_entry = ttk.Entry(self)
@@ -116,4 +117,9 @@ class IngredientsPctsInputItem(ttk.Frame):
 
     def update_levain_pct(self, new_pct):
         self.levain_pct_label.configure(text=f'{new_pct}')
-        
+    
+    def empty_scroll_command(self, event):
+        """ Returning 'break' will prevent the default bindings from 
+            being processed, thereby disabling the scrolling function. """
+        return "break"
+    
