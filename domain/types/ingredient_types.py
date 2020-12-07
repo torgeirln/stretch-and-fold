@@ -2,26 +2,27 @@
 
 class IngredientTypes():
     flour = 'Flour'
-    liquid = 'Liquid'
     levain = 'Levain'
-    salt = 'Salt'
-    sourdough_starter = 'Sourdough starter'
+    liquid = 'Liquid'
     other = 'Other'
+    salt = 'Salt'
+    yeast = 'Yeast'
 
     all_types = [
         flour,
-        liquid,
         levain,
+        liquid,
+        other,
         salt,
-        sourdough_starter,
-        other
+        yeast
     ]
-
     combobox_types = [
         flour,
+        levain,
         liquid,
+        other,
         salt,
-        other
+        yeast
     ]
 
     

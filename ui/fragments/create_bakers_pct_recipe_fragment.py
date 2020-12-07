@@ -9,6 +9,7 @@ from domain.models.response_models import ResponseStates
 from domain.models.recipe_models import NewRecipe
 from ui.items.inputs.dough_size_input import DoughSizeInput
 from ui.items.inputs.ingredients_pcts_input import IngredientsPctsInputItem
+from ui.items.inputs.ingredient_type_combobox import LeaveningAgentFlags
 from ui.items.inputs.levain_pcts_input import LevainPctsInputItem
 from ui.items.inputs.overview_input import OverviewInputItem
 from ui.items.presenters.ingredients_weights_presenter import IngredientsWeightsPresenterItem
@@ -31,6 +32,7 @@ class CreateBakersPctRecipeFragment(ScrollableFrame):
         self.create_content()
 
     def init_constants(self):
+        self.levain_visible = False
         self.row_spacing = 5
         
     def create_content(self):
@@ -50,17 +52,6 @@ class CreateBakersPctRecipeFragment(ScrollableFrame):
         self.description_entry = ScrolledText(self.scrollable_frame, width=70, height=7)
         self.description_entry.grid(row=2, column=1, columnspan=5, sticky='nsew', pady=self.row_spacing)
 
-        ttk.Label(self.scrollable_frame, text='Sourdough recipe', style=ingredient_style()).grid(
-            row=3, column=0, sticky='nsew', pady=self.row_spacing)
-        self.sourdough_recipe_checkbox_var = tk.IntVar()
-        self.sourdough_recipe_checkbox_var.set(1)
-        self.sourdough_recipe_checkbox = ttk.Checkbutton(
-            self.scrollable_frame, 
-            variable=self.sourdough_recipe_checkbox_var, 
-            command=self.on_sourdough_recipe_clicked
-        )
-        self.sourdough_recipe_checkbox.grid(row=3, column=1, sticky='w')
-
         self.add_image_button = ttk.Button(
             self.scrollable_frame, 
             text='Add image', 
@@ -71,15 +62,17 @@ class CreateBakersPctRecipeFragment(ScrollableFrame):
         self.add_image_label.grid(row=4, column=1, columnspan=5, sticky='w')
 
         self.overview_input_frame = OverviewInputItem(
-            self.scrollable_frame,
-            levain_entry_callback=self.on_levain_entry_changed
+            self.scrollable_frame
         )
         self.overview_input_frame.grid(row=5, column=0, columnspan=2, sticky='nsew', pady=10)
 
         self.levain_frame = LevainPctsInputItem(self.scrollable_frame)
         self._show_levain_frame()
         
-        self.ingredients_frame = IngredientsPctsInputItem(self.scrollable_frame)
+        self.ingredients_frame = IngredientsPctsInputItem(
+            self.scrollable_frame, 
+            self.on_leavening_agent_changed
+            )
         self.ingredients_frame.grid(row=11, column=0, columnspan=6, sticky='nsew', pady=10)
         
         self.dough_size_input = DoughSizeInput(self.scrollable_frame)
@@ -108,38 +101,65 @@ class CreateBakersPctRecipeFragment(ScrollableFrame):
             total_dough_weight += ingredient.amount
             print(f'{ingredient.name} {ingredient.type_} {ingredient.amount}')
         print(f'total_dough_weight = {total_dough_weight}')
-        self.levain_weights_frame = LevainWeightsPresenterItem(self.scrollable_frame, levain)
-        self.levain_weights_frame.grid(row=15, column=0, columnspan=6, sticky='nsew', pady=10)
+        if levain is not None:
+            self.levain_weights_frame = LevainWeightsPresenterItem(self.scrollable_frame, levain)
+            self.levain_weights_frame.grid(row=15, column=0, columnspan=6, sticky='nsew', pady=10)
+        else:
+            try:
+                self.levain_weights_frame.grid_forget()
+            except:
+                print('Failed to hide levain_weights_frame. It might be None.')
         self.ingredients_weights_frame = IngredientsWeightsPresenterItem(
             self.scrollable_frame,
             ingreidents_weights
         )
         self.ingredients_weights_frame.grid(row=16, column=0, columnspan=2, sticky='nsew', pady=10)
 
-    def on_sourdough_recipe_clicked(self, *args):
-        print('Sourdough recipe checkbox clicked!')
-        if self.sourdough_recipe_checkbox_var.get() == 0:
-            print('- Removing sourdough items')
-            self.overview_input_frame.hide_levain_input()
-            self._hide_levain_frame()
-            self.ingredients_frame.hide_levain()
-        else:
-            print('- Adding sourdough items')
-            self.overview_input_frame.show_levain_input()
+    def on_leavening_agent_changed(self, flag, *data):
+        print('on_leavening_agent_changed!')
+        print(f'*data = {data}')
+        if flag == LeaveningAgentFlags.levain_added or flag == LeaveningAgentFlags.levain_updated:
+            self.overview_input_frame.update_leavening_agent(IngredientTypes.levain, *data)
             self._show_levain_frame()
-            self.ingredients_frame.show_levain()
+            if not self.ingredients_frame.contains_ingredient_with_type(IngredientTypes.yeast):
+                # The yeast might have been replaced by levain. Make sure yeast pct is 0 in overview.
+                self.overview_input_frame.update_leavening_agent(IngredientTypes.yeast, 0)
+        elif flag == LeaveningAgentFlags.levain_removed:
+            self.overview_input_frame.update_leavening_agent(IngredientTypes.levain, 0)
+            self._hide_levain_frame()
+        elif flag == LeaveningAgentFlags.yeast_added or flag == LeaveningAgentFlags.yeast_updated:
+            self.overview_input_frame.update_leavening_agent(IngredientTypes.yeast, *data)
+            if not self.ingredients_frame.contains_ingredient_with_type(IngredientTypes.levain):
+                # The levain might have been replaced by yeast. Make sure levain pct is 0 in overview.
+                self.overview_input_frame.update_leavening_agent(IngredientTypes.levain, 0)
+                self._hide_levain_frame()
+        elif flag == LeaveningAgentFlags.yeast_removed:
+            self.overview_input_frame.update_leavening_agent(IngredientTypes.yeast, 0)
+
+    #     if self.sourdough_recipe_checkbox_var.get() == 0:
+    #         print('- Removing sourdough items')
+    #         self.overview_input_frame.hide_levain_input()
+    #         self._hide_levain_frame()
+    #         self.ingredients_frame.hide_levain()
+    #     else:
+    #         print('- Adding sourdough items')
+    #         self.overview_input_frame.show_levain_input()
+    #         self._show_levain_frame()
+    #         self.ingredients_frame.show_levain()
         
     def on_show_weights_clicked(self, *args):
         print('Show weights button clicked!')
         overview = self.overview_input_frame.get_overview()
         ingredients_pct = self.ingredients_frame.get_ingredients()
-        levain = self.levain_frame.get_levain()
+        levain = self.levain_frame.get_levain() if self.levain_visible else None
+        leavening_agents = self.ingredients_frame.get_leavening_agents()
         self.view_model.compute_recipe_weights(
             self.show_weights,
             self.dough_size_input.get_total_dough_weight(),
             overview,
             ingredients_pct, 
-            levain
+            levain,
+            leavening_agents
         )
 
     def on_save_recipe_clicked(self, *args):
@@ -167,11 +187,12 @@ class CreateBakersPctRecipeFragment(ScrollableFrame):
             category=self.category_entry.get(),
             description=self.description_entry.get("1.0", tk.END),
             image_path='data/local/included/images/sourdough_bread.jpg',
-            is_sourdough=self.sourdough_recipe_checkbox_var.get(),
+            is_sourdough=self.levain_visible,
             ingredients=self.ingredients_frame.get_ingredients(),
             levain=self.levain_frame.get_levain(),
             overview=self.overview_input_frame.get_overview(),
-            dough_size=self.dough_size_input.get_dough_size()
+            dough_size=self.dough_size_input.get_dough_size(),
+            leavening_agents=self.ingredients_frame.get_leavening_agents()
         )
         return new_recipe
 
@@ -180,14 +201,10 @@ class CreateBakersPctRecipeFragment(ScrollableFrame):
         # path_to_image = ...
         # self.add_image_label.configure(text=path_to_image)
 
-    def on_levain_entry_changed(self, new_value):
-        try:
-            self.ingredients_frame.update_levain_pct(new_value)
-        except:
-            pass
-
     def _show_levain_frame(self):
+        self.levain_visible = True
         self.levain_frame.grid(row=5, column=1, columnspan=2, sticky='nsew', pady=10)
 
     def _hide_levain_frame(self):
+        self.levain_visible = False
         self.levain_frame.grid_forget()

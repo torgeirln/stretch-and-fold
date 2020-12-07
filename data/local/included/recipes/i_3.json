@@ -15,6 +15,7 @@
 		{"name": "Olivenolje", "type_": "Other", "amount": 2.8} 
 	], 
 	"levain": {"hydration": 175.0, "ratio": 25.0, "starter_hydration": 175.0}, 
-	"overview": {"hydration": 65.0, "salt": 2.4, "levain": 20.0},
-	"dough_size": {"item_weight": 200.0, "n_items": 4}
+	"overview": {"hydration": 65.0, "salt": 2.4, "levain": 20.0, "yeast": 0},
+	"dough_size": {"item_weight": 200.0, "n_items": 4},
+	"leavening_agents": {"levain": 20.0, "yeast": 0}
 }

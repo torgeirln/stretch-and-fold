@@ -24,7 +24,7 @@ class DoughSizeInput(ttk.Frame):
         ttk.Label(self, text='Weight per item: ', style=ingredient_style()).grid(
             row=1, column=0, sticky="w", padx=self.main_padx, pady=self.row_spacing)
         self.item_weight_entry = ttk.Entry(self, width=self.entry_width)
-        self.item_weight_entry.insert(0, 800)
+        self.item_weight_entry.insert(0, 700)
         self.item_weight_entry.grid(row=1, column=1, sticky="w", pady=self.row_spacing)
         ttk.Label(self, text='g', style=ingredient_style()).grid(
             row=1, column=2, sticky="w", padx=2, pady=self.row_spacing)

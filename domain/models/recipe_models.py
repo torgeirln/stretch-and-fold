@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import List
 
 from domain.models.dough_size_models import DoughSize
-from domain.models.ingredient_models import Ingredient
+from domain.models.ingredient_models import Ingredient, LeaveningAgents
 from domain.models.levain_models import LevainPct
 from domain.models.overview_models import Overview
 
@@ -20,6 +20,7 @@ class Recipe:
     levain: LevainPct
     overview: Overview
     dough_size: DoughSize
+    leavening_agents: LeaveningAgents
 
     def __post_init__(self):
         """ Used to map inner data classes from dicts to a 
@@ -32,6 +33,8 @@ class Recipe:
             self.overview = Overview(**self.overview)
         if isinstance(self.dough_size, dict):
             self.dough_size = DoughSize(**self.dough_size)
+        if isinstance(self.leavening_agents, dict):
+            self.leavening_agents = LeaveningAgents(**self.leavening_agents)
 
 
 @dataclass
@@ -46,3 +49,4 @@ class NewRecipe:
     levain: LevainPct
     overview: Overview
     dough_size: DoughSize
+    leavening_agents: LeaveningAgents

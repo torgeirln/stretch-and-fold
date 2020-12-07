@@ -88,7 +88,8 @@ class RecipeFragment(ScrollableFrame):
             total_dough_weight,
             self.recipe.overview,
             self.recipe.ingredients, 
-            self.recipe.levain
+            self.recipe.levain,
+            self.recipe.leavening_agents
         )
         
     def show_weights(self, ingreidents_weights, levain):

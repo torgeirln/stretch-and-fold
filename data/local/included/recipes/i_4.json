@@ -1,0 +1,25 @@
+{
+	"__id__": -4, 
+	"title": "V\u00f6rtbr\u00f6d a la Tigg", 
+	"category": "Sourdough bread", 
+	"description": "V\u00f6rtbr\u00f6d med porter, julmust, russin och en julig kryddmiks!\n I denne kryddmiksen hadde jeg 30% fersk (raspet) ingefaer, 30% nymalt pomerans, 25% nymalt nellikspiker, 10% kanel og 5% nymalt kardemommme.", 
+	"image_path": "data/local/included/images/sourdough_bread.jpg", 
+	"is_sourdough": true, 
+	"ingredients": [
+		{"name": "Levain (finmalt grovmj\u00f6l)", "type_": "Levain", "amount": 20.0}, 
+		{"name": "Vetemj\u00f6l special", "type_": "Flour", "amount": 50.0}, 
+		{"name": "R\u00e5gsikt", "type_": "Flour", "amount": 50.0}, 
+		{"name": "Finkornigt salt", "type_": "Salt", "amount": 100.0}, 
+		{"name": "Vatten", "type_": "Liquid", "amount": 10.0}, 
+		{"name": "Porter\u00f6l", "type_": "Liquid", "amount": 60.0}, 
+		{"name": "Julmust", "type_": "Liquid", "amount": 30.0}, 
+		{"name": "Sm\u00e4lt sm\u00f6r", "type_": "Other", "amount": 10.0}, 
+		{"name": "Br\u00f6dsirap", "type_": "Other", "amount": 7.0}, 
+		{"name": "Kryddmix", "type_": "Other", "amount": 3.0}, 
+		{"name": "Russin", "type_": "Other", "amount": 15.0}
+	], 
+	"levain": {"hydration": 175.0, "ratio": 15.0, "starter_hydration": 175.0}, 
+	"overview": {"hydration": 75.0, "salt": 2.3, "levain": 20.0, "yeast": 0.0}, 
+	"dough_size": {"item_weight": 850.0, "n_items": 2}, 
+	"leavening_agents": {"levain": 20.0, "yeast": 0}
+}
